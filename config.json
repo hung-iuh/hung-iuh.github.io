@@ -1,5 +1,5 @@
 {
 	"PORT": 9000,
-	"BASE_ARI": "http://hung-iuh.github.io/",
+	"BASE_ARI": "https://hung-iuh.github.io/",
 	"VERIFY_CHECKSUM": true
 }
