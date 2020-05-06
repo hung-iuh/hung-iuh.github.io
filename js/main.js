@@ -40,7 +40,7 @@ function sendMessage(senderId, data) {
   };
 
   $.ajax({
-    url: 'http://localhost:9000/sendData',
+    url: 'http://sv-call-ajax.herokuapp.com/sendData',
     type: 'post',
     data: msg,
     dataType: "json",
@@ -104,7 +104,7 @@ function showFriendsFace() {
 function checkCall() {
   var myInterval = setInterval(function () {
     $.ajax({
-      url: 'http://localhost:9000/getData',
+      url: 'http://sv-call-ajax.herokuapp.com//getData',
       type: 'get',
       dataType: "json",
       'success': function(data) {
