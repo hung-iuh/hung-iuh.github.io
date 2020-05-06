@@ -1,0 +1,5 @@
+{
+	"PORT": 9000,
+	"BASE_ARI": "http://localhost:9000",
+	"VERIFY_CHECKSUM": true
+}
