@@ -82,6 +82,7 @@ async function readMessage(sender, msg) {
       console.log(e);
     });
   }
+  return;
 };
 
 function showMyFace() {
@@ -114,9 +115,8 @@ function checkCall() {
           for (let i in data) {
             var sender = data[i].sender;
             if (sender != yourId) {
-              alert('ok');
               var msg = data[i].message;
-              readMessage(sender, JSON.parse(msg));
+              await readMessage(sender, JSON.parse(msg));
             }
           }
         }
