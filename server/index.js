@@ -40,7 +40,6 @@ app.get('/getData', function (req, res) {
 
 app.post('/sendData', function (req, res) {
 	if (req.body.undefined) return;
-	console.log(req.body);
 	fs.writeFile("./data.json", JSON.stringify(req.body),function(err) {
 	    if(err) {
 	        return res.json({ 
