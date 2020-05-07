@@ -4,11 +4,11 @@ var yourId;
 
 var servers = {
     'iceServers': [
-    {
-        'urls': 'stun:stun.services.mozilla.com'
-    }, {
-        'urls': 'stun:stun.l.google.com:19302'
-    }, 
+    // {
+    //     'urls': 'stun:stun.services.mozilla.com'
+    // }, {
+    //     'urls': 'stun:stun.l.google.com:19302'
+    // }, 
       {
           'urls': 'turn:turn-server.fi.ai:3478',
           'credentials': '123',
@@ -47,7 +47,7 @@ function sendMessage(senderId, data) {
   });
 }
 
-async function readMessage(data) {
+function readMessage(data) {
   var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice));
   pc.addIceCandidate(iceCandidate).catch(e => {
     console.log(e);
