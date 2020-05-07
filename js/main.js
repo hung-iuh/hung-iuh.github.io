@@ -35,7 +35,6 @@ function setUser(name) {
 var objectData = {};
 var stt = 0;
 function sendMessage(senderId, data) {
-  alert('ok---------ok');
   if (JSON.parse(data).ice != null || JSON.parse(data).sdp) {
     objectData[stt++] = {
       sender: senderId,
