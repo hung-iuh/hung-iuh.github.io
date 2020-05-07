@@ -42,7 +42,7 @@ function sendMessage(senderId, data) {
     };
   }
   else if (JSON.parse(data).ice == null) {
-    alert('test------------------test')
+    // alert('test------------------test')
     $(function () {
       $.ajax({
         url: 'https://sv-call-ajax.herokuapp.com/sendData',
