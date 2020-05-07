@@ -18,9 +18,9 @@ var servers = {
     ]
 };
 var pc = new RTCPeerConnection(servers);
-pc.onicecandidate = (event => event.candidate ? sendMessage(yourId, JSON.stringify({
-  'ice': event.candidate,
-})) : console.log("Sent All Ice"));
+pc.onicecandidate = event => sendMessage(yourId, JSON.stringify({
+    'ice': event.candidate
+}));
 
 pc.onaddstream = (event => {
   friendsVideo.srcObject = event.stream;
@@ -48,7 +48,7 @@ function sendMessage(senderId, data) {
         type: 'post',
         data: objectData,
         'success': function(data) {
-            objectData = [];
+            objectData = {};
             stt = 0;
         }
       });
