@@ -111,7 +111,6 @@ function checkCall() {
           var sender = data[i].sender;
           if (sender != yourId) {
             var msg = data[i].message;
-            console.log(data);
             readMessage(sender, JSON.parse(msg));
           }
         }
