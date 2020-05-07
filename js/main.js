@@ -48,10 +48,10 @@ function sendMessage(senderId, data) {
     type: 'post',
     data: objectData,
     'success': function(data) {
-        objectData = {};
-        stt = 0;
     }
-  });  
+  });
+  objectData = {};
+  stt = 0;  
 }
 
 async function readMessage(sender, msg) {
