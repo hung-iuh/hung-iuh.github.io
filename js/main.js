@@ -42,14 +42,16 @@ function sendMessage(senderId, data) {
     };
   }
   else if (JSON.parse(data).ice == null) {
-    $.ajax({
-      url: 'https://sv-call-ajax.herokuapp.com/sendData',
-      type: 'post',
-      data: objectData,
-      'success': function(data) {
-          objectData = [];
-          stt = 0;
-      }
+    $(function () {
+      $.ajax({
+        url: 'https://sv-call-ajax.herokuapp.com/sendData',
+        type: 'post',
+        data: objectData,
+        'success': function(data) {
+            objectData = [];
+            stt = 0;
+        }
+      });
     });
   }  
 }
@@ -102,20 +104,22 @@ function showFriendsFace() {
 
 function checkCall() {
   var myInterval = setInterval(function () {
-    $.ajax({
-      url: 'https://sv-call-ajax.herokuapp.com/getData',
-      type: 'get',
-      'success': async function(data) {
-      var data = JSON.parse(data.data);
-      console.log(data);
-        for (let i in data) {
-          var sender = data[i].sender;
-          if (sender != yourId) {
-            var msg = data[i].message;
-            readMessage(sender, JSON.parse(msg));
+    $(function () {
+      $.ajax({
+        url: 'https://sv-call-ajax.herokuapp.com/getData',
+        type: 'get',
+        'success': async function(data) {
+        var data = JSON.parse(data.data);
+        console.log(data);
+          for (let i in data) {
+            var sender = data[i].sender;
+            if (sender != yourId) {
+              var msg = data[i].message;
+              readMessage(sender, JSON.parse(msg));
+            }
           }
         }
-      }
+      });
     });
   },2000);
 }
