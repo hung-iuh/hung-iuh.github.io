@@ -40,18 +40,18 @@ function sendMessage(senderId, data) {
       sender: senderId,
       message: data
     };
+    return;
   }
-  else if (JSON.parse(data).ice == null) {
-    $(function () {
-      $.ajax({
-        url: 'https://sv-call-ajax.herokuapp.com/sendData',
-        type: 'post',
-        data: objectData,
-        'success': function(data) {
-        }
-      });
-    });
-  }  
+  
+  $.ajax({
+    url: 'https://sv-call-ajax.herokuapp.com/sendData',
+    type: 'post',
+    data: objectData,
+    'success': function(data) {
+        objectData = {};
+        stt = 0;
+    }
+  });  
 }
 
 async function readMessage(sender, msg) {
