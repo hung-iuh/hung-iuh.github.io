@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 app.get('/getData', function (req, res) {
 
-	fs.readFile("server/data.json", 'utf8', function(err, data) {
+	fs.readFile("./data.json", 'utf8', function(err, data) {
 		if(err) {
 	        return res.json({ 
 	        	success: false,
@@ -41,18 +41,18 @@ app.get('/getData', function (req, res) {
 app.post('/sendData', function (req, res) {
 	if (req.body.undefined) return;
 	console.log(req.body);
-	fs.writeFile("server/data.json", JSON.stringify(req.body),function(err) {
+	fs.writeFile("./data.json", JSON.stringify(req.body),function(err) {
 	    if(err) {
 	        return res.json({ 
 	        	success: false,
 	        	message: err 
 	        });
 	    }
-	}); 
-	return res.json({
-        success: true,
-        message:'The data was saved'
-    });
+	    return res.json({
+	        success: true,
+	        message:'The data was saved'
+    	});
+	});
 });
 
 var port = process.env.PORT || config.PORT || 9000;
