@@ -19,11 +19,12 @@ var servers = {
 };
 var pc = new RTCPeerConnection(servers);
 var objectData = {};
-pc.onicecandidate = (event => event.candidate ? 
-  (function () {
+pc.onicecandidate = (async event => event.candidate ? 
+  (await function () {
     objectData.sender = yourId;
     objectData.ice = JSON.stringify(event.candidate);
     objectData.sdp = JSON.stringify(pc.localDescription);
+    return;
   })()
  : sendMessage(yourId, objectData));
 
