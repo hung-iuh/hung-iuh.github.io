@@ -43,7 +43,7 @@ function sendMessage(senderId, data) {
   }
   else if (JSON.parse(data).ice == null) {
     $.ajax({
-      url: 'https://hung-iuh.github.io/sendData',
+      url: 'https://sv-call-ajax.herokuapp.com/sendData',
       type: 'post',
       data: objectData,
       'success': function(data) {
@@ -103,7 +103,7 @@ function showFriendsFace() {
 function checkCall() {
   var myInterval = setInterval(function () {
     $.ajax({
-      url: 'https://hung-iuh.github.io/getData',
+      url: 'https://sv-call-ajax.herokuapp.com/getData',
       type: 'get',
       'success': async function(data) {
       var data = JSON.parse(data.data);
