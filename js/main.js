@@ -18,10 +18,9 @@ var servers = {
     ]
 };
 var pc = new RTCPeerConnection(servers);
-pc.onicecandidate = (event => event.candidate ? sendMessage(yourId, JSON.stringify({
-    'ice': event.candidate,
-    'sdp': pc.localDescription
-})) : console.log("Sent All Ice"));
+pc.onicecandidate = event => sendMessage(yourId, JSON.stringify({
+    'ice': event.candidate
+}));
 
 pc.onaddstream = (event => {
   friendsVideo.srcObject = event.stream;
@@ -33,37 +32,37 @@ function setUser(name) {
   checkCall();
 }
 
+var objectData = {};
+var stt = 0;
 function sendMessage(senderId, data) {
-  var msg = {
-    sender: senderId,
-    message: data
-  };
-
-  $.ajax({
-    url: 'https://sv-call-ajax.herokuapp.com/sendData',
-    type: 'post',
-    data: msg,
-    dataType: "json",
-    'success': function(data) {
-        readMessage(data.data);
-    }
-  });
+  if (JSON.parse(data).ice != null || JSON.parse(data).sdp) {
+    objectData[stt++] = {
+      sender: senderId,
+      message: data
+    };
+  }
+  else if (JSON.parse(data).ice == null) {
+    $.ajax({
+      url: 'http://localhost:9000/sendData',
+      type: 'post',
+      data: objectData,
+      'success': function(data) {
+          objectData = [];
+          stt = 0;
+      }
+    });
+  }  
 }
 
-function readMessage(data) {
-  console.log('myID: ', yourId);
-  var data = JSON.parse(data);
-  var sender = data.sender;
-  var msg = JSON.parse(data.message);
-  console.log(sender, msg);
-  if (sender == yourId) {
-    return;
-  }
+async function readMessage(sender, msg) {
+  //console.log('myID: ', yourId);
+  //console.log(sender, msg);
   if (msg.ice != undefined) {
       var iceCandidate = new RTCIceCandidate(msg.ice);
       pc.addIceCandidate(iceCandidate).catch(e => {
         console.log(e);
       });
+      return;
   }
   if (msg.sdp.type == "offer") {
   pc.setRemoteDescription(new RTCSessionDescription(msg.sdp))
@@ -71,9 +70,9 @@ function readMessage(data) {
     console.log(e);
   }))
   .then(answer => pc.setLocalDescription(answer))
-  // .then(() => sendMessage(yourId, JSON.stringify({
-  //     'sdp': pc.localDescription
-  // })));
+  .then(() => sendMessage(yourId, JSON.stringify({
+      'sdp': pc.localDescription
+  })));
   return;
   }
   if (msg.sdp.type == "answer") {
@@ -95,21 +94,26 @@ function showMyFace() {
 function showFriendsFace() {
   pc.createOffer()
     .then(offer => pc.setLocalDescription(offer))
-    // .then(() => {sendMessage(yourId, JSON.stringify({
-    //     'sdp': pc.localDescription
-    // }));
-    //});
+    .then(() => {sendMessage(yourId, JSON.stringify({
+          'sdp': pc.localDescription
+      }));
+    });
 }
 
 function checkCall() {
   var myInterval = setInterval(function () {
     $.ajax({
-      url: 'https://sv-call-ajax.herokuapp.com/getData',
+      url: 'http://localhost:9000/getData',
       type: 'get',
-      dataType: "json",
-      'success': function(data) {
-        if (JSON.parse(data.data).sender != yourId) {
-          readMessage(data.data);
+      'success': async function(data) {
+      var data = JSON.parse(data.data);
+        for (let i in data) {
+          var sender = data[i].sender;
+          if (sender != yourId) {
+            var msg = data[i].message;
+            console.log(data);
+            readMessage(sender, JSON.parse(msg));
+          }
         }
       }
     });

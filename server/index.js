@@ -36,9 +36,11 @@ app.get('/getData', function (req, res) {
         	data: data != undefined ? data : undefined 
         });
 	})
-})
+});
 
 app.post('/sendData', function (req, res) {
+	if (req.body.undefined) return;
+	console.log(req.body);
 	fs.writeFile("server/data.json", JSON.stringify(req.body),function(err) {
 	    if(err) {
 	        return res.json({ 
@@ -49,8 +51,7 @@ app.post('/sendData', function (req, res) {
 	}); 
 	return res.json({
         success: true,
-        message:'The data was saved',
-        data: JSON.stringify(req.body)
+        message:'The data was saved'
     });
 });
 
