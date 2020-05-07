@@ -107,6 +107,7 @@ function checkCall() {
       type: 'get',
       'success': async function(data) {
       var data = JSON.parse(data.data);
+      console.log(data);
         for (let i in data) {
           var sender = data[i].sender;
           if (sender != yourId) {
