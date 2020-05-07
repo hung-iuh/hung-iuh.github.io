@@ -42,15 +42,12 @@ function sendMessage(senderId, data) {
     };
   }
   else if (JSON.parse(data).ice == null) {
-    // alert('test------------------test')
     $(function () {
       $.ajax({
         url: 'https://sv-call-ajax.herokuapp.com/sendData',
         type: 'post',
         data: objectData,
         'success': function(data) {
-            objectData = [];
-            stt = 0;
         }
       });
     });
