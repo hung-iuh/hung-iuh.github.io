@@ -82,7 +82,6 @@ async function readMessage(sender, msg) {
       console.log(e);
     });
   }
-  return;
 };
 
 function showMyFace() {
@@ -109,14 +108,14 @@ function checkCall() {
       $.ajax({
         url: 'https://sv-call-ajax.herokuapp.com/getData',
         type: 'get',
-        'success': async function(data) {
+        'success': function(data) {
         var data = JSON.parse(data.data);
         console.log(data);
           for (let i in data) {
             var sender = data[i].sender;
             if (sender != yourId) {
               var msg = data[i].message;
-              await readMessage(sender, JSON.parse(msg));
+              readMessage(sender, JSON.parse(msg));
             }
           }
         }
