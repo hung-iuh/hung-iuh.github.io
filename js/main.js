@@ -41,7 +41,7 @@ function sendMessage(senderId, data) {
       message: data
     };
   }
-  if (JSON.parse(data).ice == null) {
+  else {
     alert('test------------------test')
     $(function () {
       $.ajax({
