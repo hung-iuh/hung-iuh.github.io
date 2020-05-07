@@ -43,7 +43,7 @@ function sendMessage(senderId, data) {
   }
   else if (JSON.parse(data).ice == null) {
     $.ajax({
-      url: 'http://localhost:9000/sendData',
+      url: 'https://hung-iuh.github.io/sendData',
       type: 'post',
       data: objectData,
       'success': function(data) {
@@ -103,7 +103,7 @@ function showFriendsFace() {
 function checkCall() {
   var myInterval = setInterval(function () {
     $.ajax({
-      url: 'http://localhost:9000/getData',
+      url: 'https://hung-iuh.github.io/getData',
       type: 'get',
       'success': async function(data) {
       var data = JSON.parse(data.data);
