@@ -4,11 +4,11 @@ var yourId;
 
 var servers = {
     'iceServers': [
-    // {
-    //     'urls': 'stun:stun.services.mozilla.com'
-    // }, {
-    //     'urls': 'stun:stun.l.google.com:19302'
-    // }, 
+    {
+        'urls': 'stun:stun.services.mozilla.com'
+    }, {
+        'urls': 'stun:stun.l.google.com:19302'
+    }, 
       {
           'urls': 'turn:turn-server.fi.ai:3478',
           'credentials': '123',
@@ -95,5 +95,5 @@ function checkCall() {
         }  
       }
     });
-  },2000);
+  },1000);
 }
