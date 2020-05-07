@@ -1,5 +1,5 @@
 {
-	"PORT": 9521,
+	"PORT": 21982,
 	"BASE_ARI": "https://sv-call-ajax.herokuapp.com/",
 	"VERIFY_CHECKSUM": true
 }
