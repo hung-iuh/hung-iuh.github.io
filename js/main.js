@@ -73,6 +73,7 @@ function readMessage(data) {
       type: 'post',
       'success': function(data) { 
         console.log(data.message);
+        alert(pc);
       }
     });
     
