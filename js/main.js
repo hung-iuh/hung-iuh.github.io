@@ -103,6 +103,7 @@ function checkCall() {
       url: 'https://sv-call-ajax.herokuapp.com/getData',
       type: 'get',
       'success': function(data) {
+        console.log(data);
         if (data == "") {
           return console.log('data empty');
         }
