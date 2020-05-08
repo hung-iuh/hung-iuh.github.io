@@ -47,7 +47,7 @@ function sendMessage(senderId, data) {
   });
 }
 
-function readMessage(data) {
+async function readMessage(data) {
   var sdp = JSON.parse(data.sdp);
       
   if (sdp.type == "offer") {
@@ -65,13 +65,14 @@ function readMessage(data) {
   }
 
   var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice));
-  pc.addIceCandidate(iceCandidate).then(() => {
+  await pc.addIceCandidate(iceCandidate).then(() => {
 
     $.ajax({
       url: 'https://sv-call-ajax.herokuapp.com/deleteData',
       type: 'post',
       'success': function(data) { 
         console.log(data.message);
+        return;
       }
     });
 
