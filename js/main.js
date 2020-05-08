@@ -53,7 +53,7 @@ function readMessage(data) {
     console.log(e);
   });
       
-  if (JSON.parse(data.sdp).type == "offer") {
+  if (JSON.parse(data.sdp).type == "offer" && JSON.parse(data.sender) != yourId) {
   pc.setRemoteDescription(new RTCSessionDescription(JSON.parse(data.sdp)))
   .then(() => pc.createAnswer().catch(e => {
     console.log(e);
