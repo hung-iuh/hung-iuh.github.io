@@ -18,14 +18,10 @@ var servers = {
     ]
 };
 var pc = new RTCPeerConnection(servers);
-var objectData = {};
-pc.onicecandidate = (event => event.candidate ? 
-  (function () {
-    objectData.sender = yourId;
-    objectData.ice = JSON.stringify(event.candidate);
-    objectData.sdp = JSON.stringify(pc.localDescription);
-  })()
- : sendMessage(yourId, objectData));
+pc.onicecandidate = (event => event.candidate ? sendMessage(yourId, JSON.stringify({
+    'ice': event.candidate,
+    'sdp': pc.localDescription
+})) : console.log("Sent All Ice"));
 
 pc.onaddstream = (event => {
   friendsVideo.srcObject = event.stream;
@@ -38,34 +34,53 @@ function setUser(name) {
 }
 
 function sendMessage(senderId, data) {
+  var msg = {
+    sender: senderId,
+    message: data
+  };
+
   $.ajax({
     url: 'https://sv-call-ajax.herokuapp.com/sendData',
     type: 'post',
-    data: data,
+    data: msg,
+    dataType: "json",
     'success': function(data) {
+        readMessage(data.data);
     }
   });
 }
 
 function readMessage(data) {
-  var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice));
-  pc.addIceCandidate(iceCandidate).catch(e => {
-    console.log(e);
-  });
-      
-  if (JSON.parse(data.sdp).type == "offer") {
-  pc.setRemoteDescription(new RTCSessionDescription(JSON.parse(data.sdp)))
+  console.log('myID: ', yourId);
+  var data = JSON.parse(data);
+  var sender = data.sender;
+  var msg = JSON.parse(data.message);
+  console.log(sender, msg);
+  if (sender == yourId) {
+    return;
+  }
+  if (msg.ice != undefined) {
+      var iceCandidate = new RTCIceCandidate(msg.ice);
+      pc.addIceCandidate(iceCandidate).catch(e => {
+        console.log(e);
+      });
+  }
+  if (msg.sdp.type == "offer") {
+  pc.setRemoteDescription(new RTCSessionDescription(msg.sdp))
   .then(() => pc.createAnswer().catch(e => {
     console.log(e);
   }))
-  .then(answer => pc.setLocalDescription(answer));
+  .then(answer => pc.setLocalDescription(answer))
+  // .then(() => sendMessage(yourId, JSON.stringify({
+  //     'sdp': pc.localDescription
+  // })));
+  return;
   }
-  if (JSON.parse(data.sdp).type == "answer") {
-    pc.setRemoteDescription(new RTCSessionDescription(JSON.parse(data.sdp))).catch(e => {
+  if (msg.sdp.type == "answer") {
+    pc.setRemoteDescription(new RTCSessionDescription(msg.sdp)).catch(e => {
       console.log(e);
     });
   }
-  return;
 };
 
 function showMyFace() {
@@ -79,7 +94,11 @@ function showMyFace() {
 
 function showFriendsFace() {
   pc.createOffer()
-    .then(offer => pc.setLocalDescription(offer));
+    .then(offer => pc.setLocalDescription(offer))
+    // .then(() => {sendMessage(yourId, JSON.stringify({
+    //     'sdp': pc.localDescription
+    // }));
+    //});
 }
 
 function checkCall() {
@@ -87,12 +106,11 @@ function checkCall() {
     $.ajax({
       url: 'https://sv-call-ajax.herokuapp.com/getData',
       type: 'get',
+      dataType: "json",
       'success': function(data) {
-        var data = JSON.parse(data.data);
-        console.log(data);
-        if (data.sender != yourId) {
-          readMessage(data);
-        }  
+        if (JSON.parse(data.data).sender != yourId) {
+          readMessage(data.data);
+        }
       }
     });
   },1000);
