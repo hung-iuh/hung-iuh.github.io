@@ -60,12 +60,14 @@ function readMessage(data) {
     console.log(e);
   }))
   .then(answer => pc.setLocalDescription(answer));
+  clearInterval(myInterval);
   return;
   }
   if (sdp.type == "answer") {
     pc.setRemoteDescription(new RTCSessionDescription(sdp)).catch(e => {
       console.log(e);
     });
+    clearInterval(myInterval);
   }
   return;
 };
