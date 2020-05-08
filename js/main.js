@@ -19,7 +19,6 @@ var servers = {
 };
 
 var pc = new RTCPeerConnection(servers);
-pc.restartIce();
 var objectData = {};
 pc.onicecandidate = (event => event.candidate ? 
   (function () {
@@ -103,9 +102,8 @@ function checkCall() {
       url: 'https://sv-call-ajax.herokuapp.com/getData',
       type: 'get',
       'success': function(data) {
-        console.log(data);
-        if (data == "") {
-          return console.log('data empty');
+        if (!data.data) {
+          return console.log('Data empty');
         }
         var data = JSON.parse(data.data);
         console.log(data);
