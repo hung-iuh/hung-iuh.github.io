@@ -40,18 +40,17 @@ pc.onaddstream = (event => {
 function setUser(name) {
   yourId = name;
   showMyFace();
-  // checkCall();
+  checkCall();
 }
 
 function sendMessage(data) {
-  console.log(data);
-  // $.ajax({
-  //   url: 'https://sv-call-ajax.herokuapp.com/sendData',
-  //   type: 'post',
-  //   data: data,
-  //   'success': function(data) {
-  //   }
-  // });
+  $.ajax({
+    url: 'https://sv-call-ajax.herokuapp.com/sendData',
+    type: 'post',
+    data: data,
+    'success': function(data) {
+    }
+  });
 }
 
 function readMessage(data) {
@@ -97,11 +96,12 @@ function checkCall() {
       url: 'https://sv-call-ajax.herokuapp.com/getData',
       type: 'get',
       'success': function(data) {
-        var data = JSON.parse(data.data);
-        console.log(data);
-        if (data.sender != yourId) {
-          readMessage(data);
-        }  
+        // var data = JSON.parse(data.data);
+        // console.log(data);
+        // if (data.sender != yourId) {
+        //   readMessage(data);
+        // }  
+        console.log(JSON.parse(data));
       }
     });
   },5000);
