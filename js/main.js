@@ -56,32 +56,28 @@ async function readMessage(data) {
     console.log(e);
   }))
   .then(answer => pc.setLocalDescription(answer));
-  return;
   }
   
   if (sdp.type == "answer") {
     pc.setRemoteDescription(new RTCSessionDescription(sdp)).catch(e => {
       console.log(e);
     });
-    return;
   }
 
   var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice));
-  await pc.addIceCandidate(iceCandidate).then(async result => {
-    await deleteData();
-  }).catch(e => {
-    console.log(e);
-  });
-
-  async function deleteData() {
-    return $.ajax({
+  pc.addIceCandidate(iceCandidate).then(result => {
+    
+    await $.ajax({
       url: 'https://sv-call-ajax.herokuapp.com/deleteData',
       type: 'post',
       'success': function(data) { 
         console.log(data.message);
       }
     });
-  }
+    
+  }).catch(e => {
+    console.log(e);
+  });
   return;
 };
 
