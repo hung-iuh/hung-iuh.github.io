@@ -56,9 +56,8 @@ function sendMessage(data) {
   });
 }
 
-function readMessage(data) {
-  var sdp = JSON.parse(data.sdp);
-  var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice));
+function readMessage(sdp, ice) {
+  var iceCandidate = new RTCIceCandidate(ice);
   pc.addIceCandidate(iceCandidate).catch(e => {
     console.log(e);
   });
@@ -100,11 +99,12 @@ function checkCall() {
       type: 'get',
       'success': function(data) {
         var data = JSON.parse(data.data);
+        var sdp = data.sdp;
         if (data.sender != yourId) {
-          for ( let i in data.ice ) {
-            console.log(i);
+          var ice = data.ice;
+          for ( let i in ice ) {
+            readMessage(JSON.parse(sdp), JSON.parse(ice[i]));
           }
-          // readMessage(data.sdp, );
         }
       }
     });
