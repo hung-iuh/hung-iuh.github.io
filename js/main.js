@@ -48,21 +48,22 @@ function sendMessage(senderId, data) {
 }
 
 function readMessage(data) {
+  var sdp = JSON.parse(data.sdp);
   var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice));
   pc.addIceCandidate(iceCandidate).catch(e => {
     console.log(e);
   });
       
-  if (JSON.parse(data.sdp).type == "offer" && JSON.parse(data.sender) != yourId) {
-  pc.setRemoteDescription(new RTCSessionDescription(JSON.parse(data.sdp)))
+  if (sdp.type == "offer") {
+  pc.setRemoteDescription(new RTCSessionDescription(sdp))
   .then(() => pc.createAnswer().catch(e => {
     console.log(e);
   }))
   .then(answer => pc.setLocalDescription(answer));
   return;
   }
-  if (JSON.parse(data.sdp).type == "answer") {
-    pc.setRemoteDescription(new RTCSessionDescription(JSON.parse(data.sdp))).catch(e => {
+  if (sdp.type == "answer") {
+    pc.setRemoteDescription(new RTCSessionDescription(sdp)).catch(e => {
       console.log(e);
     });
   }
