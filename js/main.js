@@ -26,9 +26,7 @@ pc.onicecandidate = (event => event.candidate ?
     // objectData.ice = JSON.stringify(event.candidate);
     // objectData.sdp = JSON.stringify(pc.localDescription);
     objectData[order++] = {
-      sender: yourId,
       ice: JSON.stringify(event.candidate),
-      sdp: JSON.stringify(pc.localDescription)
     }
   })()
  : sendMessage(objectData));
@@ -40,17 +38,23 @@ pc.onaddstream = (event => {
 function setUser(name) {
   yourId = name;
   showMyFace();
-  checkCall();
+  // checkCall();
 }
 
 function sendMessage(data) {
-  $.ajax({
-    url: 'https://sv-call-ajax.herokuapp.com/sendData',
-    type: 'post',
-    data: data,
-    'success': function(data) {
-    }
-  });
+  var sentData = {
+    sender: yourId,
+    sdp: JSON.stringify(pc.localDescription),
+    ice: data
+  }
+  console.log(sentData);
+  // $.ajax({
+  //   url: 'https://sv-call-ajax.herokuapp.com/sendData',
+  //   type: 'post',
+  //   data: data,
+  //   'success': function(data) {
+  //   }
+  // });
 }
 
 function readMessage(data) {
@@ -96,12 +100,12 @@ function checkCall() {
       url: 'https://sv-call-ajax.herokuapp.com/getData',
       type: 'get',
       'success': function(data) {
-        // var data = JSON.parse(data.data);
-        // console.log(data);
-        // if (data.sender != yourId) {
-        //   readMessage(data);
-        // }  
-        console.log(data);
+        var data = JSON.parse(data.data);
+        for ( let i in data ) {
+          if (data[i].sender != yourId) {
+            readMessage(data);
+          } 
+        } 
       }
     });
   },5000);
