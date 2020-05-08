@@ -47,21 +47,21 @@ function sendMessage(senderId, data) {
   });
 }
 
-function readMessage(data) {
+async function readMessage(data) {
   var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice));
-  pc.addIceCandidate(iceCandidate).catch(e => {
+  await pc.addIceCandidate(iceCandidate).catch(e => {
     console.log(e);
   });
       
   if (JSON.parse(data.sdp).type == "offer") {
-  pc.setRemoteDescription(new RTCSessionDescription(JSON.parse(data.sdp)))
+  await pc.setRemoteDescription(new RTCSessionDescription(JSON.parse(data.sdp)))
   .then(() => pc.createAnswer().catch(e => {
     console.log(e);
   }))
   .then(answer => pc.setLocalDescription(answer));
   }
   if (JSON.parse(data.sdp).type == "answer") {
-    pc.setRemoteDescription(new RTCSessionDescription(JSON.parse(data.sdp))).catch(e => {
+    await pc.setRemoteDescription(new RTCSessionDescription(JSON.parse(data.sdp))).catch(e => {
       console.log(e);
     });
   }
