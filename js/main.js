@@ -101,7 +101,7 @@ function checkCall() {
         // if (data.sender != yourId) {
         //   readMessage(data);
         // }  
-        console.log(JSON.parse(data));
+        console.log(data);
       }
     });
   },5000);
