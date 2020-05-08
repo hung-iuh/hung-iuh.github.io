@@ -104,7 +104,7 @@ function checkCall() {
           var ice = data.ice;
           for ( let i in ice ) {
             console.log('sdp----sdp', JSON.parse(sdp));
-            console.log('ice----ice', JSON.parse(ice[i]));
+            console.log('ice----ice', ice[i]);
             //readMessage(JSON.parse(sdp), JSON.parse(ice[i]));
           }
         }
