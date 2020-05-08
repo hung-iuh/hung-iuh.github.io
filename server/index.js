@@ -53,6 +53,21 @@ app.post('/sendData', function (req, res) {
 	});
 });
 
+app.post('/deleteData', function (req, res) {
+	fs.writeFile("./data.json", "",function(err) {
+	    if(err) {
+	        return res.json({ 
+	        	success: false,
+	        	message: err 
+	        });
+	    }
+	    return res.json({
+	        success: true,
+	        message:'The data was deleted'
+    	});
+	});
+});
+
 var port = process.env.PORT || config.PORT || 9000;
 app.listen(port, function () {
 	console.log('server run on port: ', port);
