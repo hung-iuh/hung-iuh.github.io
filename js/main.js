@@ -65,20 +65,21 @@ async function readMessage(data) {
   }
 
   var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice));
-  await pc.addIceCandidate(iceCandidate).then(() => {
+  await pc.addIceCandidate(iceCandidate).then(async result => {
+    await deleteData();
+  }).catch(e => {
+    console.log(e);
+  });
 
-    $.ajax({
+  async function deleteData() {
+    return $.ajax({
       url: 'https://sv-call-ajax.herokuapp.com/deleteData',
       type: 'post',
       'success': function(data) { 
         console.log(data.message);
-        return;
       }
     });
-
-  }).catch(e => {
-    console.log(e);
-  });
+  }
   return;
 };
 
