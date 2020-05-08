@@ -38,7 +38,7 @@ pc.onaddstream = (event => {
 function setUser(name) {
   yourId = name;
   showMyFace();
-  // checkCall();
+  checkCall();
 }
 
 function sendMessage(data) {
@@ -47,14 +47,13 @@ function sendMessage(data) {
     sdp: JSON.stringify(pc.localDescription),
     ice: data
   }
-  console.log(sentData);
-  // $.ajax({
-  //   url: 'https://sv-call-ajax.herokuapp.com/sendData',
-  //   type: 'post',
-  //   data: data,
-  //   'success': function(data) {
-  //   }
-  // });
+  $.ajax({
+    url: 'https://sv-call-ajax.herokuapp.com/sendData',
+    type: 'post',
+    data: sentData,
+    'success': function(data) {
+    }
+  });
 }
 
 function readMessage(data) {
@@ -100,12 +99,13 @@ function checkCall() {
       url: 'https://sv-call-ajax.herokuapp.com/getData',
       type: 'get',
       'success': function(data) {
-        var data = JSON.parse(data.data);
-        for ( let i in data ) {
-          if (data[i].sender != yourId) {
-            readMessage(data);
-          } 
-        } 
+        // var data = JSON.parse(data.data);
+        // for ( let i in data ) {
+        //   if (data[i].sender != yourId) {
+        //     readMessage(data);
+        //   } 
+        // }
+        console.log(JSON.parse(data.data)); 
       }
     });
   },5000);
