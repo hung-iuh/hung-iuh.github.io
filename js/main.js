@@ -66,8 +66,7 @@ function readMessage(data) {
   }
 
   var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice));
-  pc.addIceCandidate(iceCandidate).then(result => {
-    console.log(result);
+  pc.addIceCandidate(iceCandidate).then(() => {
     $.ajax({
       url: 'https://sv-call-ajax.herokuapp.com/deleteData',
       type: 'post',
@@ -75,7 +74,6 @@ function readMessage(data) {
         console.log(data.message);
       }
     });
-    
   }).catch(e => {
     console.log(e);
   });
