@@ -17,7 +17,9 @@ var servers = {
       }
     ]
 };
+
 var pc = new RTCPeerConnection(servers);
+pc.restartIce();
 var objectData = {};
 pc.onicecandidate = (event => event.candidate ? 
   (function () {
