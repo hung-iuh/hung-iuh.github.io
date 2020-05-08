@@ -103,6 +103,9 @@ function checkCall() {
       url: 'https://sv-call-ajax.herokuapp.com/getData',
       type: 'get',
       'success': function(data) {
+        if (data == "") {
+          return console.log('data empty');
+        }
         var data = JSON.parse(data.data);
         console.log(data);
         if (data.sender != yourId) {

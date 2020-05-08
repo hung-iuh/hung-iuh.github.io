@@ -33,7 +33,7 @@ app.get('/getData', function (req, res) {
 
 	    return res.json({ 
         	success: true,
-        	data: data != undefined ? data : undefined 
+        	data: data 
         });
 	})
 });
