@@ -56,12 +56,14 @@ async function readMessage(data) {
     console.log(e);
   }))
   .then(answer => pc.setLocalDescription(answer));
+  return;
   }
   
   if (sdp.type == "answer") {
     pc.setRemoteDescription(new RTCSessionDescription(sdp)).catch(e => {
       console.log(e);
     });
+    return;
   }
 
   var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice));
