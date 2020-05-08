@@ -5,16 +5,16 @@ var yourId;
 var servers = {
     'iceServers': [
     {
-        'urls': 'stun:stun.services.mozilla.com'
-    }, {
-        'urls': 'stun:stun.l.google.com:19302'
-    }, 
-      {
-          'urls': 'turn:turn-server.fi.ai:3478',
-          'credentials': '123',
-          'credential': '123',
-          'username': 'hung'
-      }
+        'urls': 'stun:stun.services.mozilla.com'}
+    // }, {
+    //     'urls': 'stun:stun.l.google.com:19302'
+    // }, 
+    //   {
+    //       'urls': 'turn:turn-server.fi.ai:3478',
+    //       'credentials': '123',
+    //       'credential': '123',
+    //       'username': 'hung'
+    //   }
     ]
 };
 var pc = new RTCPeerConnection(servers);
