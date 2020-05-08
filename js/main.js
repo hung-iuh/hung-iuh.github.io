@@ -103,7 +103,7 @@ function checkCall() {
         if (data.sender != yourId) {
           var ice = data.ice;
           for ( let i in ice ) {
-            readMessage(JSON.parse(sdp), ice[i].ice);
+            readMessage(JSON.parse(sdp), JSON.parse(ice[i].ice));
           }
         }
       }
