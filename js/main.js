@@ -47,7 +47,7 @@ function sendMessage(senderId, data) {
   });
 }
 
-async function readMessage(data) {
+function readMessage(data) {
   var sdp = JSON.parse(data.sdp);
       
   if (sdp.type == "offer") {
