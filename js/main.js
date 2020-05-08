@@ -1,7 +1,7 @@
 var yourVideo = document.getElementById("yourVideo");
 var friendsVideo = document.getElementById("friendsVideo");
 var yourId;
-
+var myInterval;
 var servers = {
     'iceServers': [
     // {
