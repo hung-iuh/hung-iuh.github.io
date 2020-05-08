@@ -21,6 +21,7 @@ var pc = new RTCPeerConnection(servers);
 var objectData = {};
 pc.onicecandidate = (event => event.candidate ? 
   (function () {
+    console.log('ok');
     objectData.sender = yourId;
     objectData.ice = JSON.stringify(event.candidate);
     objectData.sdp = JSON.stringify(pc.localDescription);
