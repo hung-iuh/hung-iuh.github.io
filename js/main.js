@@ -19,14 +19,19 @@ var servers = {
 };
 var pc = new RTCPeerConnection(servers);
 var objectData = {};
+var order = 0;
 pc.onicecandidate = (event => event.candidate ? 
   (function () {
-    console.log('ok');
-    objectData.sender = yourId;
-    objectData.ice = JSON.stringify(event.candidate);
-    objectData.sdp = JSON.stringify(pc.localDescription);
+    // objectData.sender = yourId;
+    // objectData.ice = JSON.stringify(event.candidate);
+    // objectData.sdp = JSON.stringify(pc.localDescription);
+    objectData[order++] = {
+      sender: yourId,
+      ice: JSON.stringify(event.candidate),
+      sdp: JSON.stringify(pc.localDescription)
+    }
   })()
- : sendMessage(yourId, objectData));
+ : sendMessage(objectData));
 
 pc.onaddstream = (event => {
   friendsVideo.srcObject = event.stream;
@@ -35,17 +40,18 @@ pc.onaddstream = (event => {
 function setUser(name) {
   yourId = name;
   showMyFace();
-  checkCall();
+  // checkCall();
 }
 
-function sendMessage(senderId, data) {
-  $.ajax({
-    url: 'https://sv-call-ajax.herokuapp.com/sendData',
-    type: 'post',
-    data: data,
-    'success': function(data) {
-    }
-  });
+function sendMessage(data) {
+  console.log(data);
+  // $.ajax({
+  //   url: 'https://sv-call-ajax.herokuapp.com/sendData',
+  //   type: 'post',
+  //   data: data,
+  //   'success': function(data) {
+  //   }
+  // });
 }
 
 function readMessage(data) {
