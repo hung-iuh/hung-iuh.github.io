@@ -99,13 +99,13 @@ function checkCall() {
       url: 'https://sv-call-ajax.herokuapp.com/getData',
       type: 'get',
       'success': function(data) {
-        // var data = JSON.parse(data.data);
-        // for ( let i in data ) {
-        //   if (data[i].sender != yourId) {
-        //     readMessage(data);
-        //   } 
-        // }
-        console.log(JSON.parse(data.data)); 
+        var data = JSON.parse(data.data);
+        if (data.sender != yourId) {
+          for ( let i in data.ice ) {
+            console.log(i);
+          }
+          // readMessage(data.sdp, );
+        }
       }
     });
   },5000);
