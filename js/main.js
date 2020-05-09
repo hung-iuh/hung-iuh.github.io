@@ -90,7 +90,7 @@ function showMyFace() {
 }
 
 function showFriendsFace() {
-  pc.createOffer()
+  pc.createOffer({iceRestart: true})
     .then(offer => pc.setLocalDescription(offer));
 }
 
