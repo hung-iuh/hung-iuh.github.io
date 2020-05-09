@@ -30,6 +30,14 @@ pc.onicecandidate = (event => event.candidate ?
 
 pc.onaddstream = (event => {
   friendsVideo.srcObject = event.stream;
+  $.ajax({
+    url: 'https://sv-call-ajax.herokuapp.com/deleteData',
+    type: 'post',
+    'success': function(data) { 
+      console.log(data.message);
+      checkCall();
+    }
+  });
 });
 
 function setUser(name) {
@@ -66,16 +74,8 @@ function readMessage(data) {
   }
 
   var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice));
-  pc.addIceCandidate(iceCandidate).then(() => {
-    console.log('ID delete data: ', data.sender);
-    $.ajax({
-      url: 'https://sv-call-ajax.herokuapp.com/deleteData',
-      type: 'post',
-      'success': function(data) { 
-        console.log(data.message);
-      }
-    });
-  }).catch(e => {
+  pc.addIceCandidate(iceCandidate)
+  .catch(e => {
     console.log(e);
   });
   return;
@@ -107,6 +107,7 @@ function checkCall() {
         var data = JSON.parse(data.data);
         console.log(data);
         if (data.sender != yourId) {
+          clearInterval(myInterval);
           readMessage(data);
         }  
       }
