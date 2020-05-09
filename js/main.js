@@ -10,7 +10,7 @@ var servers = {
     //     'urls': 'stun:stun.l.google.com:19302'
     // }, 
       {
-          'urls': 'turn:turn-server.fi.ai:3478',
+          'urls': 'turn:turn-server.fi.ai',
           'credentials': '123',
           'credential': '123',
           'username': 'hung'
