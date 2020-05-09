@@ -103,6 +103,7 @@ function checkCall() {
       'success': function(data) {
         if (!data.data) {
           return console.log('Data empty');
+          //return;
         }
         var data = JSON.parse(data.data);
         console.log(data);
@@ -112,5 +113,5 @@ function checkCall() {
         }  
       }
     });
-  },5000);
+  },1000);
 }
