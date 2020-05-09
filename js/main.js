@@ -32,7 +32,7 @@ pc.onaddstream = (event => {
   friendsVideo.srcObject = event.stream;
   $.ajax({
     url: 'https://sv-call-ajax.herokuapp.com/deleteData',
-    type: 'post',
+    type: 'delete',
     'success': function(data) { 
       console.log(data.message);
       checkCall();
