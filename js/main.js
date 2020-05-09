@@ -28,9 +28,9 @@ pc.onicecandidate = (event => event.candidate ?
   })()
  : sendMessage(yourId, objectData));
 
-pc.onaddstream = (async event => {
+pc.onaddstream = (event => {
   friendsVideo.srcObject = event.stream;
-  await deleteData();
+  deleteData();
 });
 
 function setUser(name) {
@@ -80,7 +80,7 @@ function readMessage(data) {
 
 function deleteData () {
   return $.ajax({
-    url: 'http://localhost:9000/deleteData',
+    url: 'https://sv-call-ajax.herokuapp.com/deleteData',
     type: 'post',
     'success': function(data) { 
       console.log(data.message);
