@@ -53,7 +53,7 @@ app.post('/sendData', function (req, res) {
 	});
 });
 
-app.delete('/deleteData', function (req, res) {
+app.post('/deleteData', function (req, res) {
 	fs.writeFile("./data.json", "",function(err) {
 	    if(err) {
 	        return res.json({ 
