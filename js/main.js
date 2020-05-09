@@ -18,7 +18,7 @@ var servers = {
     ]
 };
 
-var pc = new RTCPeerConnection();
+var pc = new RTCPeerConnection(servers);
 var objectData = {};
 pc.onicecandidate = (event => event.candidate ? 
   (function () {
