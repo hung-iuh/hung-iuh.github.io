@@ -3,33 +3,34 @@ var friendsVideo = document.getElementById("friendsVideo");
 var yourId;
 
 var servers = {
-  'iceServers': [
+    'iceServers': [
     // {
     //     'urls': 'stun:stun.services.mozilla.com'
-    // }, 
-    // {
+    // }, {
     //     'urls': 'stun:stun.l.google.com:19302'
     // }, 
-    {
-        'urls': 'turn:turn-server.fi.ai:3478',
-        'credential': '123',
-        'username': 'hung'
-    }
-  ]
+      {
+          'urls': 'turn:turn-server.fi.ai:3478',
+          'credentials': '123',
+          'credential': '123',
+          'username': 'hung'
+      }
+    ]
 };
 
 var pc = new RTCPeerConnection(servers);
-var objectData = {};
+var objectData = {ice: []};
+var order = 0;
+
 pc.onicecandidate = (event => event.candidate ? 
   (function () {
-    objectData.sender = yourId;
-    objectData.ice = JSON.stringify(event.candidate);
-    objectData.sdp = JSON.stringify(pc.localDescription);
+    objectData.ice.push(JSON.stringify(event.candidate));
   })()
  : sendMessage(yourId, objectData));
 
-pc.onaddstream = (event => {
+pc.onaddstream = (async event => {
   friendsVideo.srcObject = event.stream;
+  await deleteData();
 });
 
 function setUser(name) {
@@ -39,6 +40,9 @@ function setUser(name) {
 }
 
 function sendMessage(senderId, data) {
+  data.sender = yourId;
+  data.sdp = JSON.stringify(pc.localDescription);
+
   $.ajax({
     url: 'https://sv-call-ajax.herokuapp.com/sendData',
     type: 'post',
@@ -64,22 +68,25 @@ function readMessage(data) {
       console.log(e);
     });
   }
-
-  var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice));
-  pc.addIceCandidate(iceCandidate).then(() => {
-    console.log('ID delete data: ', data.sender);
-    $.ajax({
-      url: 'https://sv-call-ajax.herokuapp.com/deleteData',
-      type: 'post',
-      'success': function(data) { 
-        console.log(data.message);
-      }
+  for (let i in data.ice) {
+    var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice[i]));
+    pc.addIceCandidate(iceCandidate)
+    .catch(e => {
+      console.log(e);
     });
-  }).catch(e => {
-    console.log(e);
-  });
+  }
   return;
 };
+
+function deleteData () {
+  return $.ajax({
+    url: 'http://localhost:9000/deleteData',
+    type: 'post',
+    'success': function(data) { 
+      console.log(data.message);
+    }
+  });
+}
 
 function showMyFace() {
   navigator.mediaDevices.getUserMedia({
@@ -91,7 +98,7 @@ function showMyFace() {
 }
 
 function showFriendsFace() {
-  pc.createOffer({iceRestart: true})
+  pc.createOffer()
     .then(offer => pc.setLocalDescription(offer));
 }
 
@@ -105,7 +112,6 @@ function checkCall() {
           return console.log('Data empty');
         }
         var data = JSON.parse(data.data);
-        console.log(data);
         if (data.sender != yourId) {
           readMessage(data);
         }  
