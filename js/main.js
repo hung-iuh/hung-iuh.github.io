@@ -31,7 +31,7 @@ pc.onicecandidate = (event => event.candidate ?
 pc.onaddstream = (event => {
   friendsVideo.srcObject = event.stream;
   $.ajax({
-    url: 'http://sv-call-ajax.herokuapp.com/deleteData',
+    url: 'https://sv-call-ajax.herokuapp.com/deleteData',
     type: 'post',
     'success': function(data) { 
       console.log(data.message);
@@ -47,7 +47,7 @@ function setUser(name) {
 
 function sendMessage(senderId, data) {
   $.ajax({
-    url: 'http://sv-call-ajax.herokuapp.com/sendData',
+    url: 'https://sv-call-ajax.herokuapp.com/sendData',
     type: 'post',
     data: data,
     'success': function(data) {
@@ -97,7 +97,7 @@ function showFriendsFace() {
 function checkCall() {
   var myInterval = setInterval(function () {
     $.ajax({
-      url: 'http://sv-call-ajax.herokuapp.com/getData',
+      url: 'https://sv-call-ajax.herokuapp.com/getData',
       type: 'get',
       'success': function(data) {
         if (!data.data) {

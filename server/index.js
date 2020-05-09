@@ -5,7 +5,7 @@ var app = express();
 var config = require('../config.json');
 
 app.use(function(req, res, next){
-    req.BASE_URI = config.BASE_URI || "http://sv-call-ajax.herokuapp.com";
+    req.BASE_URI = config.BASE_URI || "https://sv-call-ajax.herokuapp.com";
     req.VERIFY_CHECKSUM = config.VERIFY_CHECKSUM;
  
     res.setHeader('Access-Control-Allow-Origin', '*');
