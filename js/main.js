@@ -20,7 +20,6 @@ var servers = {
 
 var pc = new RTCPeerConnection(servers);
 var objectData = {ice: []};
-var order = 0;
 
 pc.onicecandidate = (event => event.candidate ? 
   (function () {
