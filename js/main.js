@@ -3,18 +3,19 @@ var friendsVideo = document.getElementById("friendsVideo");
 var yourId;
 
 var servers = {
-    'iceServers': [
+  'iceServers': [
     // {
     //     'urls': 'stun:stun.services.mozilla.com'
-    // }, {
-    //     'urls': 'stun:stun.l.google.com:19302'
     // }, 
-      {
-          'urls': 'turn:turn-server.fi.ai:3478',
-          'credential': '123',
-          'username': 'hung'
-      }
-    ]
+    {
+        'urls': 'stun:stun.l.google.com:19302'
+    }, 
+    {
+        'urls': 'turn:turn-server.fi.ai:3478',
+        'credential': '123',
+        'username': 'hung'
+    }
+  ]
 };
 
 var pc = new RTCPeerConnection(servers);
