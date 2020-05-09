@@ -10,11 +10,11 @@ var servers = {
     // {
     //     'urls': 'stun:stun.l.google.com:19302'
     // }, 
-    {
-        'urls': 'turn:turn-server.fi.ai:3478',
-        'credential': '123',
-        'username': 'hung'
-    }
+    // {
+    //     'urls': 'turn:turn-server.fi.ai:3478',
+    //     'credential': '123',
+    //     'username': 'hung'
+    // }
   ]
 };
 
