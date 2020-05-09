@@ -35,7 +35,6 @@ pc.onaddstream = (event => {
     type: 'delete',
     'success': function(data) { 
       console.log(data.message);
-      checkCall();
     }
   });
 });
@@ -108,7 +107,6 @@ function checkCall() {
         var data = JSON.parse(data.data);
         console.log(data);
         if (data.sender != yourId) {
-          clearInterval(myInterval);
           readMessage(data);
         }  
       }
