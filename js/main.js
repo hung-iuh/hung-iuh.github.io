@@ -31,11 +31,11 @@ pc.onicecandidate = (event => event.candidate ?
 pc.onaddstream = (event => {
   friendsVideo.srcObject = event.stream;
   $.ajax({
-    url: 'https://sv-call-ajax.herokuapp.com/deleteData',
-    type: 'post',
     beforeSend: function(request) {
       request.setRequestHeader("User-Agent","Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36");
     },
+    url: 'https://sv-call-ajax.herokuapp.com/deleteData',
+    type: 'post',
     'success': function(data) { 
       console.log(data.message);
     }
@@ -50,12 +50,12 @@ function setUser(name) {
 
 function sendMessage(senderId, data) {
   $.ajax({
-    url: 'https://sv-call-ajax.herokuapp.com/sendData',
-    type: 'post',
-    data: data,
     beforeSend: function(request) {
       request.setRequestHeader("User-Agent","Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36");
     },
+    url: 'https://sv-call-ajax.herokuapp.com/sendData',
+    type: 'post',
+    data: data,
     'success': function(data) {
     }
   });
@@ -103,11 +103,11 @@ function showFriendsFace() {
 function checkCall() {
   var myInterval = setInterval(function () {
     $.ajax({
-      url: 'https://sv-call-ajax.herokuapp.com/getData',
-      type: 'get',
       beforeSend: function(request) {
         request.setRequestHeader("User-Agent","Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36");
       },
+      url: 'https://sv-call-ajax.herokuapp.com/getData',
+      type: 'get',
       'success': function(data) {
         if (!data.data) {
           return console.log('Data empty');
