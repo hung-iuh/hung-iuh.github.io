@@ -101,8 +101,7 @@ function checkCall() {
       type: 'get',
       'success': function(data) {
         if (!data.data) {
-          return console.log('Data empty');
-          //return;
+          console.log('Data empty');
         }
         var data = JSON.parse(data.data);
         console.log(data);
