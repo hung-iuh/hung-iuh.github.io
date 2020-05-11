@@ -49,7 +49,6 @@ function sendMessage(senderId, data) {
   $.ajax({
     url: 'https://sv-call-ajax.herokuapp.com/sendData',
     type: 'post',
-    cache : false,
     data: data,
     'success': function(data) {
     }
