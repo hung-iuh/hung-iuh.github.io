@@ -93,27 +93,23 @@ function showFriendsFace() {
   pc.createOffer({iceRestart: true})
     .then(offer => pc.setLocalDescription(offer));
 }
-var processing=false;
+
 function checkCall() {
   var myInterval = setInterval(function () {
-    if (!processing) {
-      processing = true;
-      $.ajax({
-        url: 'https://sv-call-ajax.herokuapp.com/getData',
-        type: 'get',
-        'success': function(data) {
-          processing = false;
-          if (!data.data) {
-            return console.log('Data empty');
-            // return;
-          }
-          var data = JSON.parse(data.data);
-          console.log(data);
-          if (data.sender != yourId) {
-            readMessage(data);
-          }  
+    $.ajax({
+      url: 'https://sv-call-ajax.herokuapp.com/getData',
+      type: 'get',
+      'success': function(data) {
+        if (!data.data) {
+          return console.log('Data empty');
+          // return;
         }
-      });
-    }
+        var data = JSON.parse(data.data);
+        console.log(data);
+        if (data.sender != yourId) {
+          readMessage(data);
+        }  
+      }
+    });
   },1000);
 }
