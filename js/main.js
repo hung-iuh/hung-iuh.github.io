@@ -102,6 +102,7 @@ function checkCall() {
       'success': function(data) {
         if (!data.data) {
           console.log('Data empty');
+          return;
         }
         var data = JSON.parse(data.data);
         console.log(data);
