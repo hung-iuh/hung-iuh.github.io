@@ -57,6 +57,11 @@ function sendMessage(senderId, data) {
 
 function readMessage(data) {
   var sdp = JSON.parse(data.sdp);
+  var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice));
+  pc.addIceCandidate(iceCandidate)
+  .catch(e => {
+    console.log(e);
+  });
       
   if (sdp.type == "offer") {
   pc.setRemoteDescription(new RTCSessionDescription(sdp))
@@ -71,12 +76,6 @@ function readMessage(data) {
       console.log(e);
     });
   }
-
-  var iceCandidate = new RTCIceCandidate(JSON.parse(data.ice));
-  pc.addIceCandidate(iceCandidate)
-  .catch(e => {
-    console.log(e);
-  });
   return;
 };
 
