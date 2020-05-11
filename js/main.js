@@ -32,7 +32,7 @@ pc.onaddstream = (event => {
   friendsVideo.srcObject = event.stream;
   $.ajax({
     beforeSend: function(request) {
-      request.setRequestHeader("User-Agent","Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36");
+      request.setRequestHeader("User-Agent","Mozilla/5.0 (Linux; Android 10; SM-A205U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Mobile Safari/537.36");
     },
     url: 'https://sv-call-ajax.herokuapp.com/deleteData',
     type: 'post',
@@ -51,7 +51,7 @@ function setUser(name) {
 function sendMessage(senderId, data) {
   $.ajax({
     beforeSend: function(request) {
-      request.setRequestHeader("User-Agent","Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36");
+      request.setRequestHeader("User-Agent","Mozilla/5.0 (Linux; Android 10; SM-A205U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Mobile Safari/537.36");
     },
     url: 'https://sv-call-ajax.herokuapp.com/sendData',
     type: 'post',
@@ -104,7 +104,7 @@ function checkCall() {
   var myInterval = setInterval(function () {
     $.ajax({
       beforeSend: function(request) {
-        request.setRequestHeader("User-Agent","Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36");
+        request.setRequestHeader("User-Agent","Mozilla/5.0 (Linux; Android 10; SM-A205U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Mobile Safari/537.36");
       },
       url: 'https://sv-call-ajax.herokuapp.com/getData',
       type: 'get',
