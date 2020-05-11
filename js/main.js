@@ -33,6 +33,7 @@ pc.onaddstream = (event => {
   $.ajax({
     url: 'https://sv-call-ajax.herokuapp.com/deleteData',
     type: 'post',
+    cache : false,
     'success': function(data) { 
       console.log(data.message);
     }
@@ -50,6 +51,7 @@ function sendMessage(senderId, data) {
     url: 'https://sv-call-ajax.herokuapp.com/sendData',
     type: 'post',
     data: data,
+    cache : false,
     'success': function(data) {
     }
   });
@@ -99,6 +101,7 @@ function checkCall() {
     $.ajax({
       url: 'https://sv-call-ajax.herokuapp.com/getData',
       type: 'get',
+      cache : false,
       'success': function(data) {
         if (!data.data) {
           return console.log('Data empty');
