@@ -97,7 +97,7 @@ var processing=false;
 function checkCall() {
   var myInterval = setInterval(function () {
     if (!processing) {
-      processing=true;
+      processing = true;
       $.ajax({
         url: 'https://sv-call-ajax.herokuapp.com/getData',
         type: 'get',
