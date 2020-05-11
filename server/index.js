@@ -6,7 +6,7 @@ var config = require('../config.json');
 
 app.use(function(req, res, next){
     req.BASE_URI = config.BASE_URI || "https://sv-call-ajax.herokuapp.com";
-    req.VERIFY_CHECKSUM = config.VERIFY_CHECKSUM;
+    //req.VERIFY_CHECKSUM = config.VERIFY_CHECKSUM;
  
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
